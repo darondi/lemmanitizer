@@ -30,10 +30,12 @@ def guess_tag_by_suffix(word, suffix_model):
 def is_probable_verb(word):
     """ Проверяет, может ли слово быть глаголом по его форме """
     verb_endings = [
+        "ую",
         "ла", "ло", "ли", "л",
         "ешь", "ет", "ем", "ете",
         "ишь", "ит", "им", "ите",
         "ют", "ут", "ят", "ат",
+        "ю", "у",
     ]
     return any(word.endswith(ending) for ending in verb_endings)
 
@@ -52,4 +54,8 @@ def guess_verb_lemma(word):
         return word[:-3] + "ить"
     if word.endswith(("ит", "им", "ят", "ат")):
         return word[:-2] + "ить"
+    if word.endswith(("аю", "яю")):
+        return word[:-1] + "ть"
+    if word.endswith("ую"):
+        return word[:-1] + "ть"
     return word
